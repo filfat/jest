@@ -12,7 +12,7 @@ type Process = NodeJS.Process;
 export type DoneFn = Global.DoneFn;
 export type BlockFn = Global.BlockFn;
 export type BlockName = Global.BlockName;
-export type BlockMode = void | 'skip' | 'only' | 'todo';
+export type BlockMode = void | 'skip' | 'only' | 'xfail' | 'todo';
 export type TestMode = BlockMode;
 export type TestName = Global.TestName;
 export type TestFn = Global.TestFn;
@@ -134,6 +134,10 @@ export type AsyncEvent =
       test: TestEntry;
     }
   | {
+      name: 'test_xfail';
+      test: TestEntry;
+    }
+  | {
       name: 'test_todo';
       test: TestEntry;
     }
@@ -172,7 +176,7 @@ export type MatcherResults = {
   pass: boolean;
 };
 
-export type TestStatus = 'skip' | 'done' | 'todo';
+export type TestStatus = 'skip' | 'done' | 'xfail' | 'todo';
 export type TestResult = {
   duration?: number | null;
   errors: Array<FormattedError>;

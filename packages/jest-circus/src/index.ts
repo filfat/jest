@@ -117,6 +117,11 @@ const test: Global.It = (() => {
     fn: Circus.TestFn,
     timeout?: number,
   ): void => _addTest(testName, 'only', fn, test.only, timeout);
+  const xfail = (
+    testName: Circus.TestName,
+    fn?: Circus.TestFn,
+    timeout?: number,
+  ): void => _addTest(testName, 'xfail', fn, xfail, timeout);
 
   test.todo = (testName: Circus.TestName, ...rest: Array<any>): void => {
     if (rest.length > 0 || typeof testName !== 'string') {

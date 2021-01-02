@@ -836,5 +836,26 @@ Example:
 ```js
 const add = (a, b) => a + b;
 
-test.todo('add should be associative');
+test.xfail('add should be associative');
+```
+
+### `test.xfail(name, fn)`
+
+Also under the alias: `it.xfail(name)`
+
+Use `test.xfail` when you have written a test that is expected to fail. These tests will be highlighted in the summary output at the end so you know how many tests you still need fix.
+
+_Note_: If the test succeeds when it's expected to fail `test.xfail` will throw an error.
+
+#### API
+
+- `name`: `String` the title of the test plan.
+- `fn`: `Function` the suite of tests to be ran, this is the function that will receive the test data object.
+
+Example:
+
+```js
+test.xfail('summer should not be too hot', () => {
+  expect(isCool("summer")).toBe(false);
+});
 ```

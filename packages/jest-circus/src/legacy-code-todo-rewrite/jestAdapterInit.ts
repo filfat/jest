@@ -185,6 +185,7 @@ export const runAndTransformResultsToJestFormat = async ({
   let numPassingTests = 0;
   let numPendingTests = 0;
   let numTodoTests = 0;
+  let numExpectedFailingTests = 0;
 
   const assertionResults: Array<AssertionResult> = runResult.testResults.map(
     testResult => {
@@ -195,6 +196,14 @@ export const runAndTransformResultsToJestFormat = async ({
       } else if (testResult.status === 'todo') {
         status = 'todo';
         numTodoTests += 1;
+      } else if (testResult.status === 'xfail') {
+        if (testResult.errors.length) {
+          status = 'passed';
+          numExpectedFailingTests += 1;
+        } else {
+          status = 'failed';
+          numFailingTests += 1;
+        }
       } else if (testResult.errors.length) {
         status = 'failed';
         numFailingTests += 1;
