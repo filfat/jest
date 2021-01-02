@@ -80,6 +80,7 @@ export default async function jasmine2(
 
   environment.global.test = environment.global.it;
   environment.global.it.only = environment.global.fit;
+  environment.global.it.xfail = env.xfail;
   environment.global.it.todo = env.todo;
   environment.global.it.skip = environment.global.xit;
   environment.global.xtest = environment.global.xit;

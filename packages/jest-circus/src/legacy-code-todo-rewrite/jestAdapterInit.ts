@@ -266,6 +266,7 @@ export const runAndTransformResultsToJestFormat = async ({
     numPassingTests,
     numPendingTests,
     numTodoTests,
+    numExpectedFailingTests,
     testExecError,
     testFilePath: testPath,
     testResults: assertionResults,

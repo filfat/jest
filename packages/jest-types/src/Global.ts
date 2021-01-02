@@ -80,6 +80,7 @@ export interface ItBase {
 export interface It extends ItBase {
   only: ItBase;
   skip: ItBase;
+  xfail: ItBase;
   todo: (testName: TestName) => void;
 }
 

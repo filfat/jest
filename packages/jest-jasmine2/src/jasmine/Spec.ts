@@ -93,6 +93,7 @@ export default class Spec {
   disabled?: boolean;
   currentRun?: ReturnType<typeof queueRunner>;
   markedTodo?: boolean;
+  markedExpectedFail?: boolean;
   markedPending?: boolean;
   expand?: boolean;
 
@@ -258,6 +259,10 @@ export default class Spec {
     this.markedTodo = true;
   }
 
+  xfail() {
+    this.markedExpectedFail = true;
+  }
+
   getResult() {
     this.result.status = this.status();
     return this.result;
@@ -270,6 +275,14 @@ export default class Spec {
 
     if (this.markedTodo) {
       return 'todo';
+    }
+
+    if (this.markedExpectedFail) {
+      if (this.result.failedExpectations.length > 0) {
+        return 'passed';
+      } else {
+        return 'failed';
+      }
     }
 
     if (this.markedPending) {

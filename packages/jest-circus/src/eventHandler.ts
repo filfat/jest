@@ -180,6 +180,10 @@ const eventHandler: Circus.EventHandler = (
       event.test.status = 'skip';
       break;
     }
+    case 'test_xfail': {
+      event.test.status = 'xfail';
+      break;
+    }
     case 'test_todo': {
       event.test.status = 'todo';
       break;

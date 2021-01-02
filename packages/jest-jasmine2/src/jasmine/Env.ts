@@ -93,6 +93,7 @@ export default function (j$: Jasmine) {
     ) => Suite;
     xit: (description: string, fn: QueueableFn['fn'], timeout?: number) => Spec;
     beforeAll: (beforeAllFunction: QueueableFn['fn'], timeout?: number) => void;
+    xfail: () => Spec;
     todo: () => Spec;
     provideFallbackReporter: (reporterToAdd: Reporter) => void;
     allowRespy: (allow: boolean) => void;
@@ -575,6 +576,24 @@ export default function (j$: Jasmine) {
       this.xit = function (...args) {
         const spec = this.it.apply(this, args);
         spec.pend('Temporarily disabled with xit');
+        return spec;
+      };
+
+      this.xfail = function () {
+        const description = arguments[0];
+        const callback = arguments[1];
+
+        const spec = specFactory(
+          description,
+          callback,
+          currentDeclarationSuite,
+        );
+        if (currentDeclarationSuite.markedPending) {
+          spec.pend();
+        } else {
+          spec.xfail();
+        }
+        currentDeclarationSuite.addChild(spec);
         return spec;
       };
 

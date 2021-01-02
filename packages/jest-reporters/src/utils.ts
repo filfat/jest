@@ -96,6 +96,7 @@ const getValuesCurrentTestCases = (
   let numFailingTests = 0;
   let numPassingTests = 0;
   let numPendingTests = 0;
+  let numExpectedFailingTests = 0;
   let numTodoTests = 0;
   let numTotalTests = 0;
   currentTestCases.forEach(testCase => {
@@ -112,6 +113,10 @@ const getValuesCurrentTestCases = (
         numPendingTests++;
         break;
       }
+      case 'xfail': {
+        numExpectedFailingTests++;
+        break;
+      }
       case 'todo': {
         numTodoTests++;
         break;
@@ -124,6 +129,7 @@ const getValuesCurrentTestCases = (
     numFailingTests,
     numPassingTests,
     numPendingTests,
+    numExpectedFailingTests,
     numTodoTests,
     numTotalTests,
   };
@@ -160,6 +166,7 @@ export const getSummary = (
   const testsFailed = aggregatedResults.numFailedTests;
   const testsPassed = aggregatedResults.numPassedTests;
   const testsPending = aggregatedResults.numPendingTests;
+  const testsExpectedToFail = aggregatedResults.numExpectedToFailTests;
   const testsTodo = aggregatedResults.numTodoTests;
   const testsTotal = aggregatedResults.numTotalTests;
   const width = (options && options.width) || 0;
@@ -180,6 +187,8 @@ export const getSummary = (
     testsFailed + valuesForCurrentTestCases.numFailingTests;
   const updatedTestsPending =
     testsPending + valuesForCurrentTestCases.numPendingTests;
+  const updatedTestsExpectedFailed =
+    testsExpectedToFail + valuesForCurrentTestCases.numExpectedFailingTests;
   const updatedTestsTodo = testsTodo + valuesForCurrentTestCases.numTodoTests;
   const updatedTestsPassed =
     testsPassed + valuesForCurrentTestCases.numPassingTests;
@@ -196,6 +205,9 @@ export const getSummary = (
       : '') +
     (updatedTestsTodo > 0
       ? chalk.bold.magenta(`${updatedTestsTodo} todo`) + ', '
+      : '') +
+    (updatedTestsExpectedFailed > 0
+      ? chalk.bold.cyan(`${updatedTestsExpectedFailed} expected to fail`) + ', '
       : '') +
     (updatedTestsPassed > 0
       ? chalk.bold.green(`${updatedTestsPassed} passed`) + ', '

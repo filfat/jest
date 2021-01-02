@@ -59,6 +59,7 @@ export type AggregatedResultWithoutCoverage = {
   numPassedTests: number;
   numPassedTestSuites: number;
   numPendingTests: number;
+  numExpectedToFailTests: number;
   numTodoTests: number;
   numPendingTestSuites: number;
   numRuntimeErrorTestSuites: number;
@@ -94,6 +95,7 @@ export type TestResult = {
   numFailingTests: number;
   numPassingTests: number;
   numPendingTests: number;
+  numExpectedFailingTests: number;
   numTodoTests: number;
   openHandles: Array<Error>;
   perfStats: {
